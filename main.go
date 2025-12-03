@@ -5,13 +5,38 @@ import (
 	"os"
 	"strconv"
 
+	"github.com/devscouse/advent-of-code-2025/common"
 	"github.com/devscouse/advent-of-code-2025/day1"
+	"github.com/devscouse/advent-of-code-2025/day2"
 )
 
-func check(e error) {
-	if e != nil {
-		panic(e)
+type (
+	SolverFunc func()
+	Solvers    map[int]map[int]SolverFunc
+)
+
+var solvers Solvers = make(Solvers)
+
+func (s Solvers) addSolver(dayNumber int, partNumber int, solver SolverFunc) {
+	if solvers[dayNumber] == nil {
+		solvers[dayNumber] = make(map[int]SolverFunc)
 	}
+	solvers[dayNumber][partNumber] = solver
+}
+
+func (s Solvers) runSolver(dayNumber int, partNumber int) {
+	if solvers[dayNumber] == nil || solvers[dayNumber][partNumber] == nil {
+		log.Printf("No Solver is available for day %d part %d\n", dayNumber, partNumber)
+		os.Exit(1)
+	}
+	solvers[dayNumber][partNumber]()
+}
+
+func init() {
+	solvers.addSolver(1, 1, day1.SolvePartOne)
+	solvers.addSolver(1, 2, day1.SolvePartTwo)
+	solvers.addSolver(2, 1, day2.PartOne)
+	solvers.addSolver(2, 2, day2.PartTwo)
 }
 
 func main() {
@@ -21,14 +46,13 @@ func main() {
 	}
 
 	dayNumber, err := strconv.Atoi(os.Args[1])
-	check(err)
+	common.Check(err)
 
 	partNumber, err := strconv.Atoi(os.Args[2])
-	check(err)
+	common.Check(err)
 
-	if dayNumber == 1 && partNumber == 1 {
-		day1.SolvePartOne()
-	} else if dayNumber == 1 && partNumber == 2 {
-		day1.SolvePartTwo()
-	}
+	solvers.runSolver(dayNumber, partNumber)
+
+	solver := solvers[dayNumber][partNumber]
+	solver()
 }

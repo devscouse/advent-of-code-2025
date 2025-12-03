@@ -7,6 +7,8 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+
+	"github.com/devscouse/advent-of-code-2025/common"
 )
 
 const (
@@ -30,12 +32,6 @@ func turnDialRight(start int, amount int) int {
 	return turnDialRight(0, newValue-MaxDialValue-1)
 }
 
-func check(e error) {
-	if e != nil {
-		panic(e)
-	}
-}
-
 func solve(instructions string) int {
 	dialValue := InitialDialValue
 	zeroCounts := 0
@@ -46,7 +42,7 @@ func solve(instructions string) int {
 
 		direction := instruction[0]
 		amount, err := strconv.Atoi(instruction[1:])
-		check(err)
+		common.Check(err)
 
 		log.Printf("Instruction %d: dialValue=%d direction=%c amount=%d\n", i, dialValue, direction, amount)
 
@@ -72,7 +68,7 @@ func solve(instructions string) int {
 func SolvePartOne() {
 	path := filepath.Join(".", "day1", "data", "input.dat")
 	data, err := os.ReadFile(path)
-	check(err)
+	common.Check(err)
 	solution := solve(string(data))
 	fmt.Printf("Day 1 - Part One Solution: %d\n", solution)
 }
