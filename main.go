@@ -1,13 +1,16 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/devscouse/advent-of-code-2025/common"
 	"github.com/devscouse/advent-of-code-2025/day1"
 	"github.com/devscouse/advent-of-code-2025/day2"
+	"github.com/devscouse/advent-of-code-2025/day3"
 )
 
 type (
@@ -29,7 +32,11 @@ func (s Solvers) runSolver(dayNumber int, partNumber int) {
 		log.Printf("No Solver is available for day %d part %d\n", dayNumber, partNumber)
 		os.Exit(1)
 	}
+
+	start := time.Now()
 	solvers[dayNumber][partNumber]()
+	runtime := time.Since(start).Seconds()
+	fmt.Printf("Runtime: %.2f seconds (%.2f ms)\n", runtime, runtime*1000)
 }
 
 func init() {
@@ -37,6 +44,8 @@ func init() {
 	solvers.addSolver(1, 2, day1.SolvePartTwo)
 	solvers.addSolver(2, 1, day2.PartOne)
 	solvers.addSolver(2, 2, day2.PartTwo)
+	solvers.addSolver(3, 1, day3.PartOne)
+	solvers.addSolver(3, 2, day3.PartTwo)
 }
 
 func main() {
@@ -52,7 +61,4 @@ func main() {
 	common.Check(err)
 
 	solvers.runSolver(dayNumber, partNumber)
-
-	solver := solvers[dayNumber][partNumber]
-	solver()
 }
