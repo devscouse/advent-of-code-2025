@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 	"strconv"
 
-	"github.com/devscouse/advent-of-code-2025/common"
+	"github.com/devscouse/advent-of-code-2025/core"
 )
 
 func getMaxJoltageFrom2Batteries(bank string) int {
@@ -27,10 +27,10 @@ func getMaxJoltageFrom2Batteries(bank string) int {
 	}
 
 	major, err := strconv.Atoi(string(maxMajorJolt))
-	common.Check(err)
+	core.Check(err)
 
 	minor, err := strconv.Atoi(string(minMajorJolt))
-	common.Check(err)
+	core.Check(err)
 
 	maxJoltage := major*10 + minor
 	fmt.Printf("Max Joltage: %d\n", maxJoltage)
@@ -48,7 +48,7 @@ func LoadNextBatteryBank(bfr *bufio.Reader) (string, error) {
 func PartOne() {
 	path := filepath.Join(".", "day3", "data", "input.dat")
 	file, err := os.Open(path)
-	common.Check(err)
+	core.Check(err)
 
 	bfr := bufio.NewReader(file)
 	totalJoltage := 0

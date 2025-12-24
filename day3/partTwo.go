@@ -10,7 +10,7 @@ import (
 	"slices"
 	"strconv"
 
-	"github.com/devscouse/advent-of-code-2025/common"
+	"github.com/devscouse/advent-of-code-2025/core"
 )
 
 func getTotalJoltage(enabledBatteries []rune) uint64 {
@@ -19,7 +19,7 @@ func getTotalJoltage(enabledBatteries []rune) uint64 {
 	slices.Reverse(enabledBatteries)
 	for _, j := range enabledBatteries {
 		joltage, err := strconv.Atoi(string(j))
-		common.Check(err)
+		core.Check(err)
 
 		totalJoltage += uint64(joltage * factor)
 		factor *= 10
@@ -73,7 +73,7 @@ func getMaxJoltage(bank string, maxEnabled int) uint64 {
 func PartTwo() {
 	path := filepath.Join(".", "day3", "data", "input.dat")
 	file, err := os.Open(path)
-	common.Check(err)
+	core.Check(err)
 
 	bfr := bufio.NewReader(file)
 	totalJoltage := uint64(0)

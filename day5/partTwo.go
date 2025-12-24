@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/devscouse/advent-of-code-2025/common"
+	"github.com/devscouse/advent-of-code-2025/core"
 )
 
 func CountAllFreshIngredients(freshIngredients *[]IDRange) int {
@@ -39,7 +39,7 @@ func MergeAllOverlappingRanges(ranges *[]IDRange) (*[]IDRange, int) {
 }
 
 func PartTwo() {
-	file := common.ReadPackageData("day5", "input.dat")
+	file := core.ReadPackageData("day5", "input.dat")
 	bfr := bufio.NewReader(file)
 	log.Println("File opened")
 	freshIngredients := ReadFreshIngredientIds(bfr)

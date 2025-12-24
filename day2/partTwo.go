@@ -8,7 +8,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/devscouse/advent-of-code-2025/common"
+	"github.com/devscouse/advent-of-code-2025/core"
 )
 
 func Pow10(n uint) uint {
@@ -99,7 +99,7 @@ func sumPartTwoInvalidIDsInRange(from uint, to uint) uint {
 func PartTwo() {
 	path := filepath.Join(".", "day2", "data", "input.dat")
 	file, err := os.Open(path)
-	common.Check(err)
+	core.Check(err)
 	bfr := bufio.NewReader(file)
 	var sum uint = 0
 	for {

@@ -6,20 +6,20 @@ import (
 	"io"
 	"log"
 
-	"github.com/devscouse/advent-of-code-2025/common"
+	"github.com/devscouse/advent-of-code-2025/core"
 )
 
 func readOperandSection(bfr *bufio.Reader) *[]string {
 	operandSection := make([]string, 0, 3)
 	for {
 		bytes, err := bfr.Peek(1)
-		common.Check(err)
+		core.Check(err)
 		if bytes[0] == '*' || bytes[0] == '+' {
 			return &operandSection
 		}
 
 		s, err := bfr.ReadString('\n')
-		common.Check(err)
+		core.Check(err)
 		operandSection = append(operandSection, s[:len(s)-1])
 	}
 }
@@ -52,7 +52,7 @@ func ReadCephalopodMathProblems(bfr *bufio.Reader) *[]MathProblem {
 			b := line[column]
 
 			if '0' <= b && b <= '9' {
-				operand = common.AddLeastSignificantDigit(operand, int(b-'0'))
+				operand = core.AddLeastSignificantDigit(operand, int(b-'0'))
 				dividerFound = false
 			}
 		}
@@ -79,7 +79,7 @@ func ReadCephalopodMathProblems(bfr *bufio.Reader) *[]MathProblem {
 		if err == io.EOF {
 			break
 		}
-		common.Check(err)
+		core.Check(err)
 
 		if r == ' ' || r == '\n' {
 			continue
@@ -95,7 +95,7 @@ func ReadCephalopodMathProblems(bfr *bufio.Reader) *[]MathProblem {
 }
 
 func PartTwo() {
-	file := common.ReadPackageData("day6", "input.dat")
+	file := core.ReadPackageData("day6", "input.dat")
 	bfr := bufio.NewReader(file)
 	mathProblems := ReadCephalopodMathProblems(bfr)
 	fmt.Printf("mathProblems: %+v\n", mathProblems)

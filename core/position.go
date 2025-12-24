@@ -1,4 +1,4 @@
-package common
+package core
 
 type Pos struct {
 	X int

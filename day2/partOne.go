@@ -11,7 +11,7 @@ import (
 	"path/filepath"
 	"strconv"
 
-	"github.com/devscouse/advent-of-code-2025/common"
+	"github.com/devscouse/advent-of-code-2025/core"
 )
 
 func countDigits(value uint) uint {
@@ -88,7 +88,7 @@ func ReadNextProductIDRange(bfr *bufio.Reader) (uint, uint, error) {
 func PartOne() {
 	path := filepath.Join(".", "day2", "data", "input.dat")
 	file, err := os.Open(path)
-	common.Check(err)
+	core.Check(err)
 	bfr := bufio.NewReader(file)
 	var sum uint = 0
 	for {

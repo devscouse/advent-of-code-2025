@@ -12,7 +12,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/devscouse/advent-of-code-2025/common"
+	"github.com/devscouse/advent-of-code-2025/core"
 )
 
 const startJunctionCapacity = 30
@@ -23,7 +23,7 @@ type JunctionPair struct {
 	distance float64
 }
 
-func ReadJunctionPosition(bfr *bufio.Reader) (*common.Vector3, error) {
+func ReadJunctionPosition(bfr *bufio.Reader) (*core.Vector3, error) {
 	line, _ := bfr.ReadString('\n')
 	if len(line) == 0 {
 		return nil, io.EOF
@@ -33,19 +33,19 @@ func ReadJunctionPosition(bfr *bufio.Reader) (*common.Vector3, error) {
 		return nil, fmt.Errorf("invalid junction position: %s", line)
 	}
 	x, err := strconv.ParseFloat(parts[0], 64)
-	common.Check(err)
+	core.Check(err)
 
 	y, err := strconv.ParseFloat(parts[1], 64)
-	common.Check(err)
+	core.Check(err)
 
 	z, err := strconv.ParseFloat(parts[2], 64)
-	common.Check(err)
+	core.Check(err)
 
-	return common.NewVector3(x, y, z), nil
+	return core.NewVector3(x, y, z), nil
 }
 
-func ReadJunctionPositions(bfr *bufio.Reader) *[]common.Vector3 {
-	junctionPositions := make([]common.Vector3, 0, startJunctionCapacity)
+func ReadJunctionPositions(bfr *bufio.Reader) *[]core.Vector3 {
+	junctionPositions := make([]core.Vector3, 0, startJunctionCapacity)
 	for {
 		position, err := ReadJunctionPosition(bfr)
 		if err == io.EOF {
@@ -59,7 +59,7 @@ func ReadJunctionPositions(bfr *bufio.Reader) *[]common.Vector3 {
 	return &junctionPositions
 }
 
-func GetJunctionPairs(positions *[]common.Vector3) *[]JunctionPair {
+func GetJunctionPairs(positions *[]core.Vector3) *[]JunctionPair {
 	nJunctions := len(*positions)
 	pairs := make([]JunctionPair, 0, nJunctions*nJunctions)
 
@@ -84,7 +84,7 @@ func SortPairsClosestFirst(pairs *[]JunctionPair) {
 }
 
 func PartOne() {
-	file := common.ReadPackageData("day8", "input.dat")
+	file := core.ReadPackageData("day8", "input.dat")
 	bfr := bufio.NewReader(file)
 	positions := ReadJunctionPositions(bfr)
 	log.Printf("%d positions loaded\n", len(*positions))
@@ -95,9 +95,9 @@ func PartOne() {
 	SortPairsClosestFirst(pairs)
 	log.Printf("%d pairs sorted\n", len(*pairs))
 
-	circuitPointers := make([]*common.Set, len(*positions))
+	circuitPointers := make([]*core.Set, len(*positions))
 	for i := range *positions {
-		newSet := common.NewSet()
+		newSet := core.NewSet()
 		newSet.Add(i)
 		circuitPointers[i] = newSet
 	}
@@ -118,7 +118,7 @@ func PartOne() {
 		}
 	}
 
-	circuitSizes := make(map[*common.Set]int, len(circuitPointers))
+	circuitSizes := make(map[*core.Set]int, len(circuitPointers))
 	for _, circuit := range circuitPointers {
 		circuitSizes[circuit] = len(*circuit)
 	}

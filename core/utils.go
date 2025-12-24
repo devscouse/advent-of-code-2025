@@ -1,5 +1,5 @@
 /*Package common contains small pieces of code that are used across challenges.*/
-package common
+package core
 
 import (
 	"os"

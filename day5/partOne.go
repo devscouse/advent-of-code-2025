@@ -8,7 +8,7 @@ import (
 	"log"
 	"strconv"
 
-	"github.com/devscouse/advent-of-code-2025/common"
+	"github.com/devscouse/advent-of-code-2025/core"
 )
 
 type IDRange struct {
@@ -38,28 +38,28 @@ const (
 func ReadFreshIngredientIdsRange(bfr *bufio.Reader, freshIngredients *[]IDRange) error {
 	// Peek ahead to see if we have reached the blank line
 	peek, err := bfr.Peek(1)
-	common.Check(err)
+	core.Check(err)
 
 	// If we have, consume the blank line then return an EOF
 	if peek[0] == '\n' {
 		_, err := bfr.ReadByte()
-		common.Check(err)
+		core.Check(err)
 		return io.EOF
 	}
 
 	str, err := bfr.ReadString('-')
-	common.Check(err)
+	core.Check(err)
 	str = str[:len(str)-1]
 
 	minID, err := strconv.ParseUint(str, 10, 64)
-	common.Check(err)
+	core.Check(err)
 
 	str, err = bfr.ReadString('\n')
-	common.Check(err)
+	core.Check(err)
 	str = str[:len(str)-1]
 
 	maxID, err := strconv.ParseUint(str, 10, 64)
-	common.Check(err)
+	core.Check(err)
 
 	idRange := IDRange{min: minID, max: maxID}
 	for i, r := range *freshIngredients {
@@ -125,7 +125,7 @@ func CountFreshIngredients(query []uint64, fresh []IDRange) int {
 }
 
 func PartOne() {
-	file := common.ReadPackageData("day5", "input.dat")
+	file := core.ReadPackageData("day5", "input.dat")
 	bfr := bufio.NewReader(file)
 	log.Println("File opened")
 	freshIngredients := ReadFreshIngredientIds(bfr)

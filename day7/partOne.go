@@ -8,7 +8,7 @@ import (
 	"io"
 	"slices"
 
-	"github.com/devscouse/advent-of-code-2025/common"
+	"github.com/devscouse/advent-of-code-2025/core"
 )
 
 const (
@@ -21,10 +21,10 @@ var ErrBeamLeftManifold error = errors.New("beam has left the bounds of the mani
 type Manifold struct {
 	width     int
 	height    int
-	splitters *common.BitMap
+	splitters *core.BitMap
 }
 
-func NewManifold(splitters *common.BitMap) *Manifold {
+func NewManifold(splitters *core.BitMap) *Manifold {
 	return &Manifold{width: splitters.Width, height: splitters.Height, splitters: splitters}
 }
 
@@ -59,10 +59,10 @@ func (m *TachyonManifold) String() string {
 	return repr
 }
 
-func NewTachyonManifold(width int, height int, splitterPositions *[]common.Pos, beamPosition *common.Pos) *TachyonManifold {
+func NewTachyonManifold(width int, height int, splitterPositions *[]core.Pos, beamPosition *core.Pos) *TachyonManifold {
 	size := max(width*height/64, 1)
-	bitArray := common.NewBitArray(size)
-	bitMap := common.NewBitMap(bitArray, width, height)
+	bitArray := core.NewBitArray(size)
+	bitMap := core.NewBitMap(bitArray, width, height)
 	for _, pos := range *splitterPositions {
 		bitMap.Set(pos.X, pos.Y)
 	}
@@ -71,7 +71,7 @@ func NewTachyonManifold(width int, height int, splitterPositions *[]common.Pos, 
 	beamX[0] = beamPosition.X
 
 	return &TachyonManifold{
-		manifold: NewManifold(common.NewBitMap(bitArray, width, height)),
+		manifold: NewManifold(core.NewBitMap(bitArray, width, height)),
 		beamY:    beamPosition.Y,
 		beamX:    beamX,
 		nSplits:  0,
@@ -110,8 +110,8 @@ func ReadTachyonManifold(bfr *bufio.Reader) (*TachyonManifold, error) {
 	currY := 0
 	width := -1
 	height := -1
-	var beamPosition *common.Pos = nil
-	splitterPositions := make([]common.Pos, 0, startingSplitterCapacity)
+	var beamPosition *core.Pos = nil
+	splitterPositions := make([]core.Pos, 0, startingSplitterCapacity)
 
 	for {
 		b, err := bfr.ReadByte()
@@ -140,16 +140,16 @@ func ReadTachyonManifold(bfr *bufio.Reader) (*TachyonManifold, error) {
 			if beamPosition != nil {
 				return nil, errors.New("manifold has more than one beam start position")
 			}
-			beamPosition = common.NewPos(currX, currY)
+			beamPosition = core.NewPos(currX, currY)
 		case '^':
-			splitterPositions = append(splitterPositions, *common.NewPos(currX, currY))
+			splitterPositions = append(splitterPositions, *core.NewPos(currX, currY))
 		}
 		currX++
 	}
 }
 
 func PartOne() {
-	file := common.ReadPackageData("day7", "input.dat")
+	file := core.ReadPackageData("day7", "input.dat")
 	bfr := bufio.NewReader(file)
 	manifold, err := ReadTachyonManifold(bfr)
 	if err != nil {
@@ -161,7 +161,7 @@ func PartOne() {
 		if err == ErrBeamLeftManifold {
 			break
 		}
-		common.Check(err)
+		core.Check(err)
 	}
 
 	fmt.Printf("Day 7 - Part One: %d\n", manifold.nSplits)

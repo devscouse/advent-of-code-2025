@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/devscouse/advent-of-code-2025/common"
+	"github.com/devscouse/advent-of-code-2025/core"
 )
 
 func PartTwo() {
-	file := common.ReadPackageData("day8", "input.dat")
+	file := core.ReadPackageData("day8", "input.dat")
 	bfr := bufio.NewReader(file)
 	positions := ReadJunctionPositions(bfr)
 	log.Printf("%d positions loaded\n", len(*positions))
@@ -20,9 +20,9 @@ func PartTwo() {
 	SortPairsClosestFirst(pairs)
 	log.Printf("%d pairs sorted\n", len(*pairs))
 
-	circuitPointers := make([]*common.Set, len(*positions))
+	circuitPointers := make([]*core.Set, len(*positions))
 	for i := range *positions {
-		newSet := common.NewSet()
+		newSet := core.NewSet()
 		newSet.Add(i)
 		circuitPointers[i] = newSet
 	}

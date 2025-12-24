@@ -4,12 +4,12 @@ import (
 	"bufio"
 	"fmt"
 
-	"github.com/devscouse/advent-of-code-2025/common"
+	"github.com/devscouse/advent-of-code-2025/core"
 )
 
-// RemovePossibleRolls modifies the passed common.BitMap, unsetting any bits that have
+// RemovePossibleRolls modifies the passed core.BitMap, unsetting any bits that have
 // fewer than 4 surrounding set bits. The number of bits unset is returned.
-func RemovePossibleRolls(b *common.BitMap) int {
+func RemovePossibleRolls(b *core.BitMap) int {
 	count := 0
 	for x := range b.Width {
 		for y := range b.Height {
@@ -23,7 +23,7 @@ func RemovePossibleRolls(b *common.BitMap) int {
 }
 
 func PartTwo() {
-	file := common.ReadPackageData("day4", "input.dat")
+	file := core.ReadPackageData("day4", "input.dat")
 	bfr := bufio.NewReader(file)
 	bitMap := ReadMap(bfr)
 	totalCount := 0

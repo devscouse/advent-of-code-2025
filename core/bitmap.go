@@ -1,4 +1,4 @@
-package common
+package core
 
 import "fmt"
 
@@ -45,8 +45,7 @@ func (b *BitMap) String() string {
 }
 
 func (b *BitMap) Set(x int, y int) {
-	bitIdx := y*b.Width + x
-	b.Array.Set(bitIdx)
+	b.Array.Set(b.GetPositionIdx(x, y))
 }
 
 func (b *BitMap) Unset(x int, y int) {
@@ -54,8 +53,7 @@ func (b *BitMap) Unset(x int, y int) {
 }
 
 func (b *BitMap) IsSet(x int, y int) bool {
-	bitIdx := y*b.Width + x
-	return b.Array.IsSet(bitIdx)
+	return b.Array.IsSet(b.GetPositionIdx(x, y))
 }
 
 func (b *BitMap) GetPositionIdx(x int, y int) int {

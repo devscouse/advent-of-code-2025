@@ -16,6 +16,7 @@ import (
 	"github.com/devscouse/advent-of-code-2025/day6"
 	"github.com/devscouse/advent-of-code-2025/day7"
 	"github.com/devscouse/advent-of-code-2025/day8"
+	"github.com/devscouse/advent-of-code-2025/day9"
 )
 
 type (
@@ -61,6 +62,8 @@ func init() {
 	solvers.addSolver(7, 2, day7.PartTwo)
 	solvers.addSolver(8, 1, day8.PartOne)
 	solvers.addSolver(8, 2, day8.PartTwo)
+	solvers.addSolver(9, 1, day9.PartOne)
+	solvers.addSolver(9, 2, day9.PartTwo)
 }
 
 func main() {

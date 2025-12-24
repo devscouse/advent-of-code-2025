@@ -8,7 +8,7 @@ import (
 	"io"
 	"strconv"
 
-	"github.com/devscouse/advent-of-code-2025/common"
+	"github.com/devscouse/advent-of-code-2025/core"
 )
 
 const defaultMathProblemsCapacity = 100
@@ -63,7 +63,7 @@ func ReadOperands(bfr *bufio.Reader, capacity int) []int {
 		if r == '\n' || r == ' ' {
 			if len(currOperand) > 0 {
 				value, err := strconv.Atoi(currOperand)
-				common.Check(err)
+				core.Check(err)
 				operands = append(operands, value)
 				currOperand = ""
 			}
@@ -112,7 +112,7 @@ func ReadMathProblems(bfr *bufio.Reader) *[]MathProblem {
 		if err == io.EOF {
 			break
 		}
-		common.Check(err)
+		core.Check(err)
 		if bytes[0] == '*' || bytes[0] == '+' {
 			ReadOperators(bfr, &mathProblems)
 		} else {
@@ -127,7 +127,7 @@ func ReadMathProblems(bfr *bufio.Reader) *[]MathProblem {
 }
 
 func PartOne() {
-	file := common.ReadPackageData("day6", "input.dat")
+	file := core.ReadPackageData("day6", "input.dat")
 	bfr := bufio.NewReader(file)
 	mathProblems := ReadMathProblems(bfr)
 	fmt.Printf("mathProblems: %+v\n", mathProblems)

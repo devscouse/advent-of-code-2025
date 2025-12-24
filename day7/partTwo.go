@@ -7,7 +7,7 @@ import (
 	"io"
 	"log"
 
-	"github.com/devscouse/advent-of-code-2025/common"
+	"github.com/devscouse/advent-of-code-2025/core"
 )
 
 const startParticleCapacity = 1000
@@ -42,10 +42,10 @@ func (q *QuantumTachyonManifold) String() string {
 	return repr
 }
 
-func NewQuantumTachyonManifold(width int, height int, splitterPositions *[]common.Pos, particleStart *common.Pos) *QuantumTachyonManifold {
+func NewQuantumTachyonManifold(width int, height int, splitterPositions *[]core.Pos, particleStart *core.Pos) *QuantumTachyonManifold {
 	log.Printf("Creating new QuantumTachyonManifold with width=%d, height=%d, particleStart=%+v\n", width, height, particleStart)
-	bitArray := common.NewBitArray(width * height)
-	bitMap := common.NewBitMap(bitArray, width, height)
+	bitArray := core.NewBitArray(width * height)
+	bitMap := core.NewBitMap(bitArray, width, height)
 	for _, pos := range *splitterPositions {
 		bitMap.Set(pos.X, pos.Y)
 	}
@@ -54,7 +54,7 @@ func NewQuantumTachyonManifold(width int, height int, splitterPositions *[]commo
 	particlesX[particleStart.X] = 1
 
 	return &QuantumTachyonManifold{
-		manifold:   NewManifold(common.NewBitMap(bitArray, width, height)),
+		manifold:   NewManifold(core.NewBitMap(bitArray, width, height)),
 		particlesY: particleStart.Y,
 		particlesX: particlesX,
 	}
@@ -91,8 +91,8 @@ func ReadQuantumTachyonManifold(bfr *bufio.Reader) (*QuantumTachyonManifold, err
 	currY := 0
 	width := -1
 	height := -1
-	var particleStart *common.Pos = nil
-	splitterPositions := make([]common.Pos, 0, startingSplitterCapacity)
+	var particleStart *core.Pos = nil
+	splitterPositions := make([]core.Pos, 0, startingSplitterCapacity)
 
 	for {
 		b, err := bfr.ReadByte()
@@ -121,16 +121,16 @@ func ReadQuantumTachyonManifold(bfr *bufio.Reader) (*QuantumTachyonManifold, err
 			if particleStart != nil {
 				return nil, errors.New("manifold has more than one particle start position")
 			}
-			particleStart = common.NewPos(currX, currY)
+			particleStart = core.NewPos(currX, currY)
 		case '^':
-			splitterPositions = append(splitterPositions, *common.NewPos(currX, currY))
+			splitterPositions = append(splitterPositions, *core.NewPos(currX, currY))
 		}
 		currX++
 	}
 }
 
 func PartTwo() {
-	file := common.ReadPackageData("day7", "input.dat")
+	file := core.ReadPackageData("day7", "input.dat")
 	bfr := bufio.NewReader(file)
 	manifold, err := ReadQuantumTachyonManifold(bfr)
 	if err != nil {
@@ -142,7 +142,7 @@ func PartTwo() {
 		if err == ErrBeamLeftManifold {
 			break
 		}
-		common.Check(err)
+		core.Check(err)
 	}
 	nTimelines := 0
 	for _, positionTimelines := range manifold.particlesX {

@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/devscouse/advent-of-code-2025/common"
+	"github.com/devscouse/advent-of-code-2025/core"
 )
 
 const (
@@ -42,7 +42,7 @@ func solve(instructions string) int {
 
 		direction := instruction[0]
 		amount, err := strconv.Atoi(instruction[1:])
-		common.Check(err)
+		core.Check(err)
 
 		log.Printf("Instruction %d: dialValue=%d direction=%c amount=%d\n", i, dialValue, direction, amount)
 
@@ -68,7 +68,7 @@ func solve(instructions string) int {
 func SolvePartOne() {
 	path := filepath.Join(".", "day1", "data", "input.dat")
 	data, err := os.ReadFile(path)
-	common.Check(err)
+	core.Check(err)
 	solution := solve(string(data))
 	fmt.Printf("Day 1 - Part One Solution: %d\n", solution)
 }
